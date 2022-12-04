@@ -50,18 +50,23 @@ jobs:
                   ./run-tests.sh -v -d ${{ github.event.inputs.day }} -2
               shell: bash
 
-            - name: Commit files
-              run: |
-                  git status
-                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git config --local user.name "github-actions[bot]"
-                  git commit -a -m "Write validation results"
-
-            - name: Push changes
-              uses: ad-m/github-push-action@master
+            - uses: actions/upload-artifact@v3
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: ${{ github.ref }}
+                  name: updated-results
+                  path: path/to/artifact/world.txt
+
+            # - name: Commit files
+            #   run: |
+            #       git status
+            #       git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            #       git config --local user.name "github-actions[bot]"
+            #       git commit -a -m "Write validation results"
+
+            # - name: Push changes
+            #   uses: ad-m/github-push-action@master
+            #   with:
+            #       github_token: ${{ secrets.GITHUB_TOKEN }}
+            #       branch: ${{ github.ref }}
 
     test:
         if: always()
@@ -72,11 +77,15 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - name: Update validation
-              run: |
-                  git pull
+            - uses: actions/download-artifact@v3
+              with:
+                  name: updated-results
 
-            - uses: actions/checkout@v3
+            # - name: Update validation
+            #   run: |
+            #       git pull
+
+            # - uses: actions/checkout@v3
 
             - name: Test solutions
               run: |
