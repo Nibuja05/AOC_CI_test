@@ -102,6 +102,9 @@ while getopts "hlbv12d:i:" option; do
    esac
 done
 
+echo $(cat website/data/01.json)
+printf "TEST"
+
 [[ -z "$day" ]] && printf "Missing -d DAY\n" && exit 1;
 
 if [[ "$list_only" = "true" ]]; then
@@ -119,6 +122,9 @@ if [[ -z "$input" ]]; then
   input="../../tests/inputs/$day"
 fi
 
+echo $(cat website/data/01.json)
+printf "TEST"
+
 if [[ $verify_only = "true" ]]; then
 
   entry-points $day | while read path; do
@@ -131,8 +137,6 @@ if [[ $verify_only = "true" ]]; then
     name=$(get-name "$path")
     verify-solution $day $first_second $solution $name || exit 1
   done
-
-  echo $(cat ./website/data/01.json)
   exit;
 fi
 
@@ -165,6 +169,7 @@ entry-points "$day" | while read path; do
   cmdRaw="$MAKE -n INPUT=$input -C $dir run-1"
 
   echo $(cat website/data/01.json)
+  printf "TEST"
 
   valid=$(is-valid "$day" "$name")
   if [[ $valid = '"true"' ]]; then
