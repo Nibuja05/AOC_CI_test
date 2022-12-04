@@ -31,5 +31,5 @@ jobs:
             - name: Run a multi-line script
               run: |
                   chmod +x ./scripts/test.sh
-                  ./scripts/test.sh -b -d ${{ github.event.inputs.environment }}
+                  ./scripts/test.sh -b -d ${{ github.event.inputs.day }}
               shell: bash
