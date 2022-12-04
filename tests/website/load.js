@@ -111,10 +111,8 @@ function createDay(index, data) {
 				]);
 			}
 			solutionList.sort((a, b) => a[1] - b[1]);
-			console.log(solutionList);
 
-			for (let [name, mean, valid] of solutionList) {
-				// valid = '"true"';
+			for (const [name, mean, valid] of solutionList) {
 				const solution = createElement("div", solutions, {
 					classes: [
 						"solution",
