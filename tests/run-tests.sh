@@ -89,13 +89,15 @@ entry-points "$day" | while read path; do
 done
 [[ $build_only = "true" ]] && exit;
 
+printf "> No biuld!"
+
 # [[ -z "$input" ]] && printf "Missing -i INPUT_FILE\n" && exit 1;
 if [[ -z "$input" ]]; then
 	echo "No Input! $day"
 else
 	echo "Input set!"
 
-echo "Test"
+printf "Test"
 exit 1;
 
 entry-points $day | while read path; do
