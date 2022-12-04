@@ -4,8 +4,7 @@ set -x
 MAKE="make -s"
 OUTPUT="website/data/"
 
-printf "START"
-echo $(pwd)
+echo $(cat ./website/data/01.json)
 
 help() {
   # Display help
