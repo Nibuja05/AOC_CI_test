@@ -2,6 +2,7 @@
 set -x
 
 MAKE="make -s"
+OUTPUT="website/data/"
 
 help() {
   # Display help
@@ -17,7 +18,7 @@ help() {
 
 entry-points() {
   day=$1
-  find "./$1" -maxdepth 2 -type f -regex '.*/\(M\|m\|GNUm\)akefile' 
+  find "../$1" -maxdepth 2 -type f -regex '.*/\(M\|m\|GNUm\)akefile' 
 }
 
 build-project() {
@@ -41,8 +42,30 @@ verify-solution() {
   day=$1
   first_second=$2
   solution=$3
+  name=$4
   expect=$(jq --raw-output ".day$day.$first_second" solutions.json)
-  [[ "$solution" == "$expect" ]]
+  valid="false"
+  if [[ "$solution" == "$expect" ]]; then
+    valid="true"
+  fi
+  file="$OUTPUT$day.json"
+  content=$(jq -n --arg valid "$valid" --argjson results "[]" '$ARGS.named')
+  query='{.'"$name"' = '"$content"'} '"$file"''
+  res=$(jq --argjson variable "$content" '.'"$name"' = $variable' "$file")
+  echo "$res" > "$file"
+}
+
+is-valid() {
+  day=$1
+  name=$2
+  file="$OUTPUT$day.json"
+  echo "$(jq '.'"$name"'.valid' "$file")"
+}
+
+get-name() {
+  path=$1
+  dir=$(dirname $1)
+  echo $(echo "$dir" | sed -e 's/.*\///g')
 }
 
 day=
@@ -89,36 +112,68 @@ entry-points "$day" | while read path; do
 done
 [[ $build_only = "true" ]] && exit;
 
-printf "> No biuld!"
+printf "> No build!"
 
 # [[ -z "$input" ]] && printf "Missing -i INPUT_FILE\n" && exit 1;
 if [[ -z "$input" ]]; then
-  printf "No Input! $day"
-else
-  printf "Input set!"
+  input="../../tests/inputs/$day"
+fi
 
-printf "Test"
-exit 1;
+if [[ $verify_only = "true" ]]; then
 
-entry-points $day | while read path; do
-  if [[ "$first_second" = "first" ]]; then
-    solution=$(run-project-1 "$path" "$input")
-  elif [[ "$first_second" = "second" ]]; then
-    solution=$(run-project-2 "$path" "$input")
-  fi
-  verify-solution $day $first_second $solution || exit 1
-done
+  entry-points $day | while read path; do
+    if [[ "$first_second" = "first" ]]; then
+      solution=$(run-project-1 "$path" "$input")
+    elif [[ "$first_second" = "second" ]]; then
+      solution=$(run-project-2 "$path" "$input")
+    fi
+    [[ -z "$solution" ]] && solution="empty"
+    name=$(get-name "$path")
+    verify-solution $day $first_second $solution $name || exit 1
+  done
+  exit;
+fi
 
-[[ $verify_only = "true" ]] && exit;
+# [[ $verify_only = "true" ]] && exit;
 
 # FUCK BASH
 # (┛◉Д◉)┛彡┻━┻
-commands=$(entry-points "$day" | while read path; do
+
+# commands=$(entry-points "$day" | while read path; do
+#   dir=$(dirname $path)
+#   cmd=$($MAKE -n INPUT=$input -C $dir run-1)
+#   cmdRaw="$MAKE -n INPUT=$input -C $dir run-1"
+#   # printf "%s\n" "--prepare"
+#   # printf "%s\n" "sudo cd $dir"
+#   # printf "sudo cd $dir ; "
+#   # printf "$dir/"
+#   # printf "%s\n" "$cmd"
+#   printf "%s\n" "python3"
+#   # (cd $dir; pwd)
+# done)
+# printf "\n\n\n"
+# echo $commands
+# hyperfine -N $commands --export-json blub.json
+
+entry-points "$day" | while read path; do
+  printf "\n\n\n"
   dir=$(dirname $path)
+  name=$(get-name "$path")
   cmd=$($MAKE -n INPUT=$input -C $dir run-1)
-  printf "%s\n" "--prepare"
-  printf "%s\n" "cd $dir"
-  printf "%s\n" "$cmd"
-done)
-echo $commands
-hyperfine -N $commands
+  cmdRaw="$MAKE -n INPUT=$input -C $dir run-1"
+
+  valid=$(is-valid "$day" "$name")
+  if [[ $valid = '"true"' ]]; then
+
+    # FUCK BASH
+    # (┛◉Д◉)┛彡┻━┻
+    command="python3" # need to run true command here, not this placeholder
+    hyperfine $command --export-json temp.json
+
+    results=$(jq '.results' temp.json)
+    out=$(jq -n --argjson test "$results" '$ARGS.named')
+    file="website/data/$day.json"
+    res=$(jq --argjson variable "$results" '.'"$name"'.results = $variable' "$file")
+    echo "$res" > "$file"
+  fi
+done

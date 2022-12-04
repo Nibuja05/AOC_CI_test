@@ -2,7 +2,7 @@ import time
 from re import split as rsplit
 import sys
 
-def getBoundaries(part: str) -> tuple[int, int]:
+def getBoundaries(part: str):
 	return [int(x) for x in part.split("-")]
 
 def findOverlaps(part1: str, part2: str) -> bool:
@@ -41,7 +41,5 @@ def main(input: str, part2 = False):
 if __name__ == "__main__":
 	input = sys.argv[1] if len(sys.argv) > 1 else "./input.txt"
 	part = int(sys.argv[2]) if len(sys.argv) > 2 else 1
-	# start = time.perf_counter()
 	main(input, part == 2)
-	# oneLiner(True)
 	# print(f"Executed in {(time.perf_counter() - start) * 1000}ms")
