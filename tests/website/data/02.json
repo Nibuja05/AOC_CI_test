@@ -101,6 +101,10 @@
 	},
 	"johannes": {
 		"valid": "false",
-		"results": []
+		"results": [
+			{
+				"mean": "0.006"
+			}
+		]
 	}
 }

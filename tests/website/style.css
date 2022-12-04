@@ -80,12 +80,12 @@ body::-webkit-scrollbar {
 
 .result {
 	width: 100%;
-	min-height: 500px;
+	min-height: 20px;
 	background: rgb(53, 53, 58);
 	border-radius: 10px;
 
 	box-sizing: border-box;
-	padding: 10px 40px;
+	padding: 10px 40px 40px 40px;
 }
 
 .anchor {
@@ -131,6 +131,7 @@ body::-webkit-scrollbar {
 	width: 200px;
 	font-weight: bold;
 	font-size: 20px;
+	margin-left: 10px;
 }
 
 .solution .bar {

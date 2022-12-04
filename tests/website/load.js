@@ -80,25 +80,47 @@ function createDay(index, data) {
 			classes: ["solutions"],
 		});
 
+		const MAX_VAL = 0;
+
+		let maxValues = [];
 		for (let task = 1; task <= 2; task++) {
-			const maxValue = Math.max(
-				...Object.values(data).map((entry) =>
-					// (entry) => entry.results
-					entry.results && entry.results.length >= task
-						? entry.results[task - 1].mean
-						: 0
+			maxValues.push(
+				Math.max(
+					...Object.values(data).map((entry) =>
+						entry.results && entry.results.length >= task
+							? entry.results[task - 1].mean
+							: MAX_VAL
+					)
 				)
 			);
-			console.log(maxValue);
+		}
+		const maxValue = Math.max(...maxValues);
 
+		for (let task = 1; task <= 2; task++) {
 			createElement("h2", solutions, { content: `Task ${task}` });
 
-			for (const [name, values] of Object.entries(data)) {
-				values.valid = '"true"';
+			const solutionList = [];
+			for (let i = 0; i < count; i++) {
+				const entry = Object.values(data)[i];
+				solutionList.push([
+					Object.keys(data)[i],
+					entry.results && entry.results.length >= task
+						? entry.results[task - 1].mean
+						: undefined,
+					entry.valid,
+				]);
+			}
+			solutionList.sort((a, b) => a[1] - b[1]);
+			console.log(solutionList);
+
+			for (let [name, mean, valid] of solutionList) {
+				// valid = '"true"';
 				const solution = createElement("div", solutions, {
 					classes: [
 						"solution",
-						values.valid == "false" ? "invalid" : undefined,
+						valid == "false" || mean == undefined
+							? "invalid"
+							: undefined,
 					],
 				});
 				createElement("div", solution, {
@@ -115,17 +137,15 @@ function createDay(index, data) {
 				const innerBar = createElement("div", timeBar, {
 					classes: ["bar-inner"],
 				});
-				let time = 10;
-				if (values.results && values.results.length >= task) {
-					const res = values.results[task - 1];
-					time = res.mean;
-				}
 
-				createFilledBar(innerBar, 40);
-				createElement("div", timeBar, {
-					classes: ["bar-time"],
-					content: `${time.toFixed(4)} ms`,
-				});
+				if (mean != undefined) {
+					const percent = (mean / maxValue) * 100;
+					createFilledBar(innerBar, percent);
+					createElement("div", timeBar, {
+						classes: ["bar-time"],
+						content: `${mean.toFixed(4)} ms`,
+					});
+				}
 			}
 		}
 	}
