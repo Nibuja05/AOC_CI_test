@@ -53,7 +53,7 @@ jobs:
             - uses: actions/upload-artifact@v3
               with:
                   name: updated-results
-                  path: path/to/artifact/world.txt
+                  path: ./tests/website/data
 
             # - name: Commit files
             #   run: |
