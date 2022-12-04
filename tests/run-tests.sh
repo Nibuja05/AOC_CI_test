@@ -95,6 +95,9 @@ if [[ -z "$input" ]]; then
 else
 	echo "Input set!"
 
+echo "Test"
+exit 1;
+
 entry-points $day | while read path; do
   if [[ "$first_second" = "first" ]]; then
     solution=$(run-project-1 "$path" "$input")
