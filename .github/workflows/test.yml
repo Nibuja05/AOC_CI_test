@@ -63,6 +63,9 @@ jobs:
                   ./run-tests.sh -d ${{ github.event.inputs.day }} -2
               shell: bash
 
+            - name: Installation cleanup
+              run: sudo rm hyperfine_1.15.0_amd64.deb
+
             - name: Commit files
               run: |
                   git status
