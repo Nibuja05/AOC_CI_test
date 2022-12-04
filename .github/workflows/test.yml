@@ -47,3 +47,17 @@ jobs:
                   chmod +x ./tests/run-tests.sh
                   ./tests/run-tests.sh -v -d ${{ github.event.inputs.day }}
               shell: bash
+
+    test:
+        needs: [validate]
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Run a multi-line script
+              run: |
+                  chmod +x ./tests/run-tests.sh
+                  ./tests/run-tests.sh -d ${{ github.event.inputs.day }}
+              shell: bash
