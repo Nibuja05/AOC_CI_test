@@ -50,6 +50,9 @@ jobs:
                   ./run-tests.sh -v -d ${{ github.event.inputs.day }} -2
               shell: bash
 
+            - name: Install hyperfine
+              run: sudo apt-get install hyperfine
+
             - name: Test solutions
               run: |
                   cd ./tests
