@@ -6,14 +6,10 @@ name: Test Solutions
 on:
     workflow_dispatch:
         inputs:
-            environment:
-                description: "Define env name"
+            day:
+                description: "Tag auswählen"
                 required: true
-                default: "prod"
-            branch:
-                description: "Define branch name"
-                required: true
-                default: "master"
+                default: "1"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,5 +31,5 @@ jobs:
             - name: Run a multi-line script
               run: |
                   chmod +x ./scripts/test.sh
-                  ./scripts/test.sh -b -d 1
+                  ./scripts/test.sh -b -d ${{ github.event.inputs.environment }}
               shell: bash
