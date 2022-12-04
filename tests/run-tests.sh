@@ -5,6 +5,7 @@ MAKE="make -s"
 OUTPUT="website/data/"
 
 printf "START"
+echo $(pwd)
 
 help() {
   # Display help
