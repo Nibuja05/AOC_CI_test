@@ -4,6 +4,8 @@ set -x
 MAKE="make -s"
 OUTPUT="website/data/"
 
+printf "START"
+
 help() {
   # Display help
   echo $0
