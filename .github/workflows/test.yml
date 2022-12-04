@@ -44,8 +44,9 @@ jobs:
 
             - name: Run a multi-line script
               run: |
-                  chmod +x ./tests/run-tests.sh
-                  ./tests/run-tests.sh -v -d ${{ github.event.inputs.day }} -1
+                  cd ./tests
+                  chmod +x ./run-tests.sh
+                  ./run-tests.sh -v -d ${{ github.event.inputs.day }} -1
               shell: bash
 
     test:
@@ -58,6 +59,7 @@ jobs:
 
             - name: Run a multi-line script
               run: |
-                  chmod +x ./tests/run-tests.sh
-                  ./tests/run-tests.sh -d ${{ github.event.inputs.day }} -1
+                  cd ./tests
+                  chmod +x ./run-tests.sh
+                  ./run-tests.sh -d ${{ github.event.inputs.day }} -1
               shell: bash
