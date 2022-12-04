@@ -4,7 +4,7 @@ set -x
 MAKE="make -s"
 OUTPUT="website/data/"
 
-echo $(cat ./website/data/01.json)
+echo $(cat website/data/01.json)
 
 help() {
   # Display help
@@ -163,6 +163,8 @@ entry-points "$day" | while read path; do
   name=$(get-name "$path")
   cmd=$($MAKE -n INPUT=$input -C $dir run-1)
   cmdRaw="$MAKE -n INPUT=$input -C $dir run-1"
+
+  echo $(cat website/data/01.json)
 
   valid=$(is-valid "$day" "$name")
   if [[ $valid = '"true"' ]]; then
