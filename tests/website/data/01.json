@@ -100,7 +100,11 @@
 		]
 	},
 	"johannes": {
-		"valid": "false",
-		"results": []
+		"valid": "true",
+		"results": [
+			{
+				"mean": 0.1
+			}
+		]
 	}
 }

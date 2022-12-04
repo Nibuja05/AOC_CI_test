@@ -64,6 +64,9 @@ body::-webkit-scrollbar {
 .day a:active {
 	text-decoration: none;
 }
+.placeholder {
+	height: 200px;
+}
 
 .results {
 	padding: 150px 10% 0 10%;
@@ -93,11 +96,78 @@ body::-webkit-scrollbar {
 
 .header {
 	height: 50px;
-	background: red;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .header p {
 	font-size: 30px;
 	font-weight: bold;
 	margin-top: 5px;
+}
+
+.header .counts {
+	margin-top: 10px;
+}
+
+.solutions {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.solution {
+	font-size: 15px;
+	display: flex;
+}
+
+.solution.invalid {
+	color: rgb(255, 85, 0);
+}
+
+.solution .name {
+	width: 200px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.solution .bar {
+	background: rgba(0, 0, 0, 0.075);
+	width: 100%;
+	height: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	font-size: 17px;
+}
+
+.solution.invalid .bar {
+	display: none;
+}
+
+.bar-inner {
+	margin: -2px 20px 0 20px;
+	width: 100%;
+	background: rgb(90, 90, 100);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.bar-part {
+	height: 100%;
+	background: repeating-linear-gradient(
+		-45deg,
+		#ffdfa3,
+		#ffdfa3 10px,
+		#ffa500 10px,
+		#ffa500 20px
+	);
+}
+
+.bar-time {
+	width: 150px;
+	text-align: right;
 }

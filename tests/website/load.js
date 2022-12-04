@@ -25,12 +25,14 @@ async function loadDataForDay(day) {
 }
 
 async function loadDays() {
-	// loadDataForDay(1);
 	for (let i = 1; i <= 24; i++) {
 		dayData = await loadDataForDay(i);
 
 		createDay(i, dayData);
 	}
+	createElement("div", document.getElementById("content"), {
+		classes: ["placeholder"],
+	});
 }
 
 function prepareDays() {
@@ -48,7 +50,8 @@ function prepareDays() {
 function createDay(index, data) {
 	const newDay = document.getElementById(`nav-day${index}`);
 
-	if (data && Object.keys(data).length > 0) {
+	const count = Object.keys(data).length;
+	if (data && count > 0) {
 		newDay.classList.remove("inactive");
 
 		const resultContainer = document.getElementById("content");
@@ -65,11 +68,77 @@ function createDay(index, data) {
 		const header = createElement("div", result, { classes: ["header"] });
 		createElement("p", header, { content: `Day ${index}` });
 
-		console.log(data);
-		createElement;
+		const validCount = Object.values(data).filter(
+			(entry) => entry.valid == "true"
+		).length;
+		createElement("div", header, {
+			classes: ["counts"],
+			content: `Solutions: ${validCount}/${count}`,
+		});
 
-		// const
+		const solutions = createElement("div", result, {
+			classes: ["solutions"],
+		});
+
+		for (let task = 1; task <= 2; task++) {
+			const maxValue = Math.max(
+				...Object.values(data).map((entry) =>
+					// (entry) => entry.results
+					entry.results && entry.results.length >= task
+						? entry.results[task - 1].mean
+						: 0
+				)
+			);
+			console.log(maxValue);
+
+			createElement("h2", solutions, { content: `Task ${task}` });
+
+			for (const [name, values] of Object.entries(data)) {
+				values.valid = '"true"';
+				const solution = createElement("div", solutions, {
+					classes: [
+						"solution",
+						values.valid == "false" ? "invalid" : undefined,
+					],
+				});
+				createElement("div", solution, {
+					classes: ["name"],
+					content: name,
+				});
+				const timeBar = createElement("div", solution, {
+					classes: ["bar"],
+				});
+				createElement("div", timeBar, {
+					classes: ["bar-title"],
+					content: "Time",
+				});
+				const innerBar = createElement("div", timeBar, {
+					classes: ["bar-inner"],
+				});
+				let time = 10;
+				if (values.results && values.results.length >= task) {
+					const res = values.results[task - 1];
+					time = res.mean;
+				}
+
+				createFilledBar(innerBar, 40);
+				createElement("div", timeBar, {
+					classes: ["bar-time"],
+					content: `${time.toFixed(4)} ms`,
+				});
+			}
+		}
 	}
+}
+
+function createFilledBar(parent, percent) {
+	const part1 = createElement("div", parent, {
+		classes: ["bar-part", "part-1"],
+	});
+	part1.style.width = `${percent}%`;
+	// const part2 = createElement("div", parent, {
+	// 	classes: ["bar-part", "part-2"],
+	// });
 }
 
 prepareDays();
