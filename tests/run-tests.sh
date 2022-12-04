@@ -131,6 +131,8 @@ if [[ $verify_only = "true" ]]; then
     name=$(get-name "$path")
     verify-solution $day $first_second $solution $name || exit 1
   done
+
+  echo $(cat ./website/data/01.json)
   exit;
 fi
 
