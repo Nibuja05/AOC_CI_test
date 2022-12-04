@@ -1,0 +1,10 @@
+{
+  "anton": {
+    "valid": "true",
+    "results": []
+  },
+  "johannes": {
+    "valid": "false",
+    "results": []
+  }
+}
