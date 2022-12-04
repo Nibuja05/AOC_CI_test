@@ -172,6 +172,7 @@ entry-points "$day" | while read path; do
     hyperfine $command --export-json temp.json
 
     results=$(jq '.results' temp.json)
+	rm temp.json
     out=$(jq -n --argjson test "$results" '$ARGS.named')
     file="website/data/$day.json"
     res=$(jq --argjson variable "$results" '.'"$name"'.results = $variable' "$file")

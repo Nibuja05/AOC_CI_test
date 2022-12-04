@@ -1,3 +1,4 @@
+import sys
 
 def top(vList: list, top):
 	tops = []
@@ -8,10 +9,10 @@ def top(vList: list, top):
 	return tops
 
 
-def main():
+def main(path, part2 = False):
 	elfList = []
 	curSum = 0
-	with open("./input.txt") as file:
+	with open(path) as file:
 		for line in file:
 			if line.strip() == "":
 				elfList.append(curSum)
@@ -19,10 +20,13 @@ def main():
 				continue
 			curSum += int(line)
 	elfList.append(curSum)
-	tops = top(elfList, 3)
+	tops = top(elfList, 3) if part2 else top(elfList, 1)
 	together = sum(tops)
-	print("Test most calories carried by an elf are: ", tops, together)
+	print(together)
+	# print("Test most calories carried by an elf are: ", tops, together)
 
 
 if __name__ == "__main__":
-	main()
+	input = sys.argv[1] if len(sys.argv) > 1 else "./input.txt"
+	part = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+	main(input, part == 2)
