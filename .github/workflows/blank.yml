@@ -1,9 +1,19 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Test Solutions
 
 # Controls when the workflow will run
-on: workflow_dispatch
+on:
+    workflow_dispatch:
+        inputs:
+            environment:
+                description: "Define env name"
+                required: true
+                default: "prod"
+            branch:
+                description: "Define branch name"
+                required: true
+                default: "master"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
