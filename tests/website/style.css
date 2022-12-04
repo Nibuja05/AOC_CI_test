@@ -82,7 +82,7 @@ body::-webkit-scrollbar {
 	border-radius: 10px;
 
 	box-sizing: border-box;
-	padding: 40px;
+	padding: 10px 40px;
 }
 
 .anchor {

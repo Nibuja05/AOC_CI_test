@@ -59,6 +59,8 @@ function createDay(index, data) {
 		const header = document.createElement("h2");
 		header.innerHTML = `Day ${index}`;
 		result.appendChild(header);
+
+		// const
 	}
 }
 
