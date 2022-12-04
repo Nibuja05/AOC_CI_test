@@ -62,7 +62,7 @@ is-valid() {
   day=$1
   name=$2
   file="$OUTPUT$day.json"
-#   printf "$(jq '' "$file")"
+  printf "$(jq '' "$file")"
   echo "$(jq '.'"$name"'.valid' "$file")"
 }
 
