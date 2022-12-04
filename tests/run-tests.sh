@@ -115,18 +115,12 @@ entry-points "$day" | while read path; do
 done
 [[ $build_only = "true" ]] && exit;
 
-printf "> No build!"
-
 # [[ -z "$input" ]] && printf "Missing -i INPUT_FILE\n" && exit 1;
 if [[ -z "$input" ]]; then
   input="../../tests/inputs/$day"
 fi
 
-printf "> Here"
-
 if [[ $verify_only = "true" ]]; then
-
-	printf "> Inside"
 
   entry-points $day | while read path; do
     if [[ "$first_second" = "first" ]]; then
