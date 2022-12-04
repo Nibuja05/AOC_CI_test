@@ -35,6 +35,8 @@ jobs:
               shell: bash
 
     validate:
+        needs: [build]
+
         runs-on: ubuntu-latest
 
         steps:
