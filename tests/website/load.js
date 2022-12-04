@@ -42,8 +42,7 @@ function prepareDays() {
 			id: `nav-day${i}`,
 			classes: ["day", "inactive"],
 		});
-		const dayLink = createElement("a", newDay, { content: i });
-		dayLink.href = `#day${i}`;
+		createElement("a", newDay, { content: i });
 	}
 }
 
@@ -53,6 +52,7 @@ function createDay(index, data) {
 	const count = Object.keys(data).length;
 	if (data && count > 0) {
 		newDay.classList.remove("inactive");
+		newDay.children[0].href = `#day${index}`;
 
 		const resultContainer = document.getElementById("content");
 

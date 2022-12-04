@@ -54,9 +54,10 @@ body::-webkit-scrollbar {
 	background: rgb(255, 188, 63);
 }
 
-.inactive a:hover {
+/* .day a:hover,
+.day:hover {
 	cursor: default;
-}
+} */
 
 .day a:link,
 .day a:visited,
@@ -149,7 +150,7 @@ body::-webkit-scrollbar {
 }
 
 .bar-inner {
-	margin: -2px 20px 0 20px;
+	margin: -2px 20px 0 10px;
 	width: 100%;
 	background: rgb(90, 90, 100);
 	border-radius: 5px;
@@ -170,4 +171,34 @@ body::-webkit-scrollbar {
 .bar-time {
 	width: 150px;
 	text-align: right;
+}
+
+@media only screen and (max-width: 600px) {
+	.results {
+		padding: 280px 0 0 0;
+	}
+
+	.result {
+		border-radius: 0;
+	}
+
+	.anchor {
+		top: -290px;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.results {
+		padding: 280px 0 0 0;
+	}
+
+	.result {
+		border-radius: 0;
+	}
+
+	.solution {
+		flex-direction: column;
+		gap: 5px;
+		margin-bottom: 10px;
+	}
 }
