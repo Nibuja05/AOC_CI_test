@@ -80,8 +80,6 @@ function createDay(index, data) {
 			classes: ["solutions"],
 		});
 
-		const MAX_VAL = 0;
-
 		let maxValues = [];
 		for (let task = 1; task <= 2; task++) {
 			maxValues.push(
@@ -89,7 +87,7 @@ function createDay(index, data) {
 					...Object.values(data).map((entry) =>
 						entry.results && entry.results.length >= task
 							? entry.results[task - 1].mean
-							: MAX_VAL
+							: 0
 					)
 				)
 			);
@@ -99,6 +97,8 @@ function createDay(index, data) {
 		for (let task = 1; task <= 2; task++) {
 			createElement("h2", solutions, { content: `Task ${task}` });
 
+			const MAX_VAL = 9999;
+
 			const solutionList = [];
 			for (let i = 0; i < count; i++) {
 				const entry = Object.values(data)[i];
@@ -106,17 +106,18 @@ function createDay(index, data) {
 					Object.keys(data)[i],
 					entry.results && entry.results.length >= task
 						? entry.results[task - 1].mean
-						: undefined,
+						: MAX_VAL,
 					entry.valid,
 				]);
 			}
 			solutionList.sort((a, b) => a[1] - b[1]);
 
 			for (const [name, mean, valid] of solutionList) {
+				const curTime = mean == MAX_VAL ? undefined : mean;
 				const solution = createElement("div", solutions, {
 					classes: [
 						"solution",
-						valid == "false" || mean == undefined
+						valid == "false" || curTime == undefined
 							? "invalid"
 							: undefined,
 					],
@@ -128,20 +129,20 @@ function createDay(index, data) {
 				const timeBar = createElement("div", solution, {
 					classes: ["bar"],
 				});
-				createElement("div", timeBar, {
-					classes: ["bar-title"],
-					content: "Time",
-				});
+				// createElement("div", timeBar, {
+				// 	classes: ["bar-title"],
+				// 	content: "Time",
+				// });
 				const innerBar = createElement("div", timeBar, {
 					classes: ["bar-inner"],
 				});
 
-				if (mean != undefined) {
-					const percent = (mean / maxValue) * 100;
+				if (curTime != undefined) {
+					const percent = (curTime / maxValue) * 100;
 					createFilledBar(innerBar, percent);
 					createElement("div", timeBar, {
 						classes: ["bar-time"],
-						content: `${mean.toFixed(4)} ms`,
+						content: `${curTime.toFixed(4)} ms`,
 					});
 				}
 			}
