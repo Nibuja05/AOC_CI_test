@@ -1,14 +1,14 @@
 {
-	"anton": {
-		"valid": "true",
-		"results": []
-	},
-	"johannes": {
-		"valid": "true",
-		"results": [
-			{
-				"mean": 0.1
-			}
-		]
-	}
+  "anton": {
+    "valid": "true",
+    "results": []
+  },
+  "johannes": {
+    "valid": "true",
+    "results": [
+      {
+        "mean": 0.1
+      }
+    ]
+  }
 }
