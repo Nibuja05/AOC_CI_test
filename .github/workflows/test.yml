@@ -42,7 +42,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - name: Run a multi-line script
+            - name: Validate solutions
               run: |
                   cd ./tests
                   chmod +x ./run-tests.sh
@@ -50,18 +50,18 @@ jobs:
                   ./run-tests.sh -v -d ${{ github.event.inputs.day }} -2
               shell: bash
 
-            # - name: Commit files
-            #   run: |
-            #       git status
-            #       git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            #       git config --local user.name "github-actions[bot]"
-            #       git commit -a -m "Write validation results"
+            - name: Commit files
+              run: |
+                  git status
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git commit -a -m "Write validation results"
 
-            # - name: Push changes
-            #   uses: ad-m/github-push-action@master
-            #   with:
-            #       github_token: ${{ secrets.GITHUB_TOKEN }}
-            #       branch: ${{ github.ref }}
+            - name: Push changes
+              uses: ad-m/github-push-action@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: ${{ github.ref }}
 
     test:
         needs: [validate]
@@ -71,7 +71,11 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
-            - name: Run a multi-line script
+            - name: Update validation
+              run: |
+                  git pull
+
+            - name: Test solutions
               run: |
                   cd ./tests
                   chmod +x ./run-tests.sh
