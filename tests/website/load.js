@@ -1,5 +1,14 @@
 const zeroPad = (num, places) => String(num).padStart(places, "0");
 
+function createElement(type, parent, options = {}) {
+	const item = document.createElement(type);
+	if (options.id) item.id = options.id;
+	if (options.classes) options.classes.map((c) => item.classList.add(c));
+	if (options.content) item.innerHTML = options.content;
+	parent.appendChild(item);
+	return item;
+}
+
 // const BASE_PATH ="file:///C:/Users/anton/Programmieren/AOC_CI_test/tests/website/";
 const BASE_PATH = "https://nibuja05.github.io/AOC_CI_test/";
 
@@ -27,16 +36,12 @@ async function loadDays() {
 function prepareDays() {
 	const nav = document.getElementById("nav");
 	for (let i = 1; i <= 24; i++) {
-		const newDay = document.createElement("div");
-		newDay.classList.add("day");
-		newDay.id = `nav-day${i}`;
-		nav.appendChild(newDay);
-		const dayLink = document.createElement("a");
+		const newDay = createElement("div", nav, {
+			id: `nav-day${i}`,
+			classes: ["day", "inactive"],
+		});
+		const dayLink = createElement("a", newDay, { content: i });
 		dayLink.href = `#day${i}`;
-		dayLink.innerHTML = i;
-		newDay.appendChild(dayLink);
-
-		newDay.classList.add("inactive");
 	}
 }
 
@@ -47,18 +52,21 @@ function createDay(index, data) {
 		newDay.classList.remove("inactive");
 
 		const resultContainer = document.getElementById("content");
-		const result = document.createElement("div");
-		result.classList.add("result");
-		result.id = `day${index}-data`;
-		resultContainer.appendChild(result);
-		const anchor = document.createElement("div");
-		anchor.classList.add("anchor");
-		anchor.id = `day${index}`;
-		result.appendChild(anchor);
 
-		const header = document.createElement("h2");
-		header.innerHTML = `Day ${index}`;
-		result.appendChild(header);
+		const result = createElement("div", resultContainer, {
+			classes: ["result"],
+			id: `day${index}-data`,
+		});
+		createElement("div", result, {
+			id: `day${index}`,
+			classes: ["anchor"],
+		});
+
+		const header = createElement("div", result, { classes: ["header"] });
+		createElement("p", header, { content: `Day ${index}` });
+
+		console.log(data);
+		createElement;
 
 		// const
 	}

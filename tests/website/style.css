@@ -11,7 +11,7 @@ body::-webkit-scrollbar {
 	display: none;
 }
 
-.header {
+.nav-bar {
 	position: fixed;
 	top: 0;
 	width: 100vw;
@@ -87,6 +87,17 @@ body::-webkit-scrollbar {
 
 .anchor {
 	position: relative;
-	top: -120px;
+	top: -160px;
 	width: 0;
+}
+
+.header {
+	height: 50px;
+	background: red;
+}
+
+.header p {
+	font-size: 30px;
+	font-weight: bold;
+	margin-top: 5px;
 }
