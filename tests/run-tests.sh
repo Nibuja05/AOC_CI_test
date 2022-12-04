@@ -51,7 +51,7 @@ list_only=false
 build_only=false
 verify_only=false
 input=
-while getopts "hlb12d:i:" option; do
+while getopts "hlbv12d:i:" option; do
    case $option in
       h) # display Help
          help
@@ -89,7 +89,11 @@ entry-points "$day" | while read path; do
 done
 [[ $build_only = "true" ]] && exit;
 
-[[ -z "$input" ]] && printf "Missing -i INPUT_FILE\n" && exit 1;
+# [[ -z "$input" ]] && printf "Missing -i INPUT_FILE\n" && exit 1;
+if [[ -z "$input" ]]; then
+	echo "No Input! $day"
+else
+	echo "Input set!"
 
 entry-points $day | while read path; do
   if [[ "$first_second" = "first" ]]; then
