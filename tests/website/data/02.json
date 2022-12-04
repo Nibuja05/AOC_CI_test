@@ -103,10 +103,10 @@
 		"valid": "true",
 		"results": [
 			{
-				"mean": "0.006"
+				"mean": 0.006
 			},
 			{
-				"mean": "0.02"
+				"mean": 0.02
 			}
 		]
 	}
